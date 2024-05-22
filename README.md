@@ -1,16 +1,22 @@
 # Road Traffic Sign Classification
 
-## Introduction
+<details>
+<summary><h2>Introduction</h2></summary>
 The aim of this project is to train at least two models to classify images of European road traffic signs based on their sign shape or sign type. To achieve this, I analyzed a specifically prepared dataset from the Belgium Traffic Sign Classification (TSC) Benchmark, consisting of 3699 grayscale images, using Jupyter Notebook. Exploratory Data Analysis (EDA) was performed to better understand the data composition. An ‘unseen’ independent evaluation dataset, compiled from a combination of images from the German TSC dataset, images from the internet, and digital photos taken personally from an iPhone, was used to evaluate each developed model's performance.
 
 Two different supervised machine learning algorithms were investigated: Artificial Neural Network (ANN) and Convolutional Neural Network (CNN). Model optimization techniques such as hyperparameter tuning, regularization, dropout, data augmentation, and edge detection filtering were also explored. Based on the results obtained from each model's performance against the evaluation dataset, the best model for each task was identified.
+</details>
 
-## Training & Validation Dataset
+<details>
+<summary><h2>Training & Validation Dataset</h2></summary>
 The dataset provided for this project is a modified version of the Belgium Traffic Sign Classification Benchmark which contains images of European road traffic signs taken from real-world vehicles. It consists of 3699 grayscale ‘.png’ images, each having a 28 (H) x 28 (W) pixel dimension.
 
 Images have been placed in sub-directories in the format of `./trafficsigns_dataset/{sign-shape}/{sign-type}/`, corresponding to its correct classification. For example, an image in the `/diamond/rightofway/` directory has a sign shape of ‘diamond’, and a sign type of ‘rightofway’. Some sign types have different individual signs, such as the ‘speed’ sign type having signs from 10-70mph.
+</details>
 
-## Exploratory Data Analysis
+<details>
+<summary><h2>Exploratory Data Analysis</h2></summary>
+
 ### Data Preparation
 In preparing the dataset for analysis and model training, I utilized a script to systematically traverse through the directory structure of the traffic sign images. The script loops through each subdirectory, reading each image file (in PNG format), and extracting relevant metadata such as the image's file path, sign shape, sign type, dimensions, and an MD5 hash. The MD5 hash is used in a later step to ensure none of the images are duplicated in the evaluation set. These details are appended to a list, which is then converted into a pandas DataFrame. This DataFrame provides a structured view of the dataset, containing columns for the image's file path, image path, filename, sign shape, sign type, and dimensions. The final DataFrame consists of 3699 rows with 7 attributes each, enabling efficient EDA.
 
@@ -30,14 +36,20 @@ Since I am testing my model with real-world data that would be completely unseen
 
 ### Data Leakage Check
 The distribution of sign shapes and sign types in the training and validation sets demonstrates good overlap, showing that both sets contain similar proportions of each type. The consistent peaks for common shapes and types across both datasets confirm good representation and suggest that the validation set can provide a realistic indication of the model's performance on new, unseen data. The data split appears to be effective, suggesting that the validation set mirrors the training data well, supporting effective model training and validation.
+</details>
 
-## Evaluation Metrics
+<details>
+<summary><h2>Evaluation Metrics</h2></summary>
+
 ### Chosen Metrics: Accuracy and Weighted F1-Score
 Accuracy serves as a general performance indicator, measuring the overall correctness of the model. It is defined as the ratio of correctly predicted observations to the total observations, providing a quick and intuitive measure of the model’s general effectiveness.
 
 The Weighted F1-Score addresses the class imbalance present in the dataset. It adjusts the F1-Score for each class by the number of true instances, giving more weight to classes with more samples. This metric provides a balance between precision and recall in a single number, weighted by the class distribution. This ensures that the model’s performance on less common classes significantly influences the overall score.
+</details>
 
-## Model Development
+<details>
+<summary><h2>Model Development</h2></summary>
+
 ### Artificial Neural Network (ANN) - Baseline
 Starting with an ANN allows me to establish a straightforward performance metric to determine if the complexity added by Convolutional Neural Networks (CNNs) is justified. This approach is particularly useful because it allows me to quickly identify any major issues or bottlenecks in the initial model without the added complexity of a CNN. Additionally, ANNs are faster to train and easier to debug, making them ideal for initial experimentation and validation.
 
@@ -67,7 +79,6 @@ Starting with an ANN allows me to establish a straightforward performance metric
 #### Sign Type Architecture
 - Similar to Sign Shape Architecture with the addition of a third convolutional layer (Conv2D(128, (3, 3), activation='relu')) and corresponding pooling and dropout layers.
 - **Output Layer**: Dense(16, activation='softmax') for multi-class classification.
-
 ### Model Compilation
 - **Optimizer**: Adam for efficient weight adjustment.
 - **Loss Function**: Categorical crossentropy for multi-class classification.
@@ -81,8 +92,10 @@ Conducted using Bayesian search on multiple models across both ANN and CNN. For 
 
 ### Early Stopping
 Incorporated to terminate training when the selected metric no longer improves within a chosen ‘patience’ period, reducing overfitting.
+</details>
 
-## Evaluation Dataset
+<details>
+<summary><h2>Evaluation Dataset</h2></summary>
 An ‘unseen’ independent evaluation dataset, consisting of 493 images, was used to evaluate the performance of each developed model. This dataset was compiled from a combination of the following:
 - Images from the German TSC dataset
 - Images from the test set of the Belgium TSC dataset
@@ -90,8 +103,10 @@ An ‘unseen’ independent evaluation dataset, consisting of 493 images, was us
 - Digital photos taken personally from an iPhone
 
 A significant portion of the evaluation dataset was sourced from the German TSC dataset due to the similarity in street sign design between Germany and Belgium. The Belgium TSC dataset was also used due to the absence of a few sign types in the German TSC dataset. Additionally, images sourced from the internet were used to increase the sample size for certain sign types. Personally taken digital photos were included to ensure the models are viable in real-world scenarios. Prior to evaluation, the dataset was preprocessed by converting images to grayscale, resizing to 28x28, and applying an edge detection filter (if applicable).
+</details>
 
-## Final Evaluation Results
+<details>
+<summary><h2>Final Evaluation Results</h2></summary>
 The results (based on the evaluation metrics chosen) of each model architecture against variations of the training dataset are summarized below. Note:
 - ‘_opt’ refers to an optimized model with hyperparameter tuning conducted.
 - Data Augmentation applied only on the training set.
@@ -130,22 +145,28 @@ Based on the results, the best model for sign shape is the ‘shape_cnn_opt’ m
 |                     | WF1: 0.74      | WF1: 0.88         | WF1: 0.83         |
 
 The best model for sign type is the ‘type_cnn_1’ model with data augmentation, achieving an accuracy and weighted F1-score of 0.90.
+</details>
 
-## Discussion
+<details>
+<summary><h2>Discussion</h2></summary>
 Due to the increase in hyperparameters requiring tuning in CNN models, a larger number of trials were required to arrive at the optimal values compared to ANN where only two hyperparameters were tuned. As a result, the performance of ‘optimized’ models may be lower due to suboptimal hyperparameter values, as seen in the case of ‘type_cnn_opt’ compared to ‘type_cnn_1’.
 
 ### Edge Detection Filters
 - **ANN Performance Improvement**: Edge detection filters simplify input data by highlighting edges and removing extraneous details, benefiting ANNs by making it easier to learn important features.
 - **CNN Performance Decrease**: Edge detection filters can remove important contextual and textural information, leading to decreased performance as CNNs rely on rich, unaltered input data to learn and apply their own filters.
+</details>
 
-## Conclusion
+<details>
+<summary><h2>Conclusion</h2></summary>
 In conclusion, appropriate machine learning techniques were selected and applied to create two models used to predict the sign shape or sign type of European Traffic Street signs. EDA was performed on the datasets to better understand the data in depth, such as image dimension, class imbalance, and color distribution. An independent evaluation set was created from various sources, including real-world photos taken personally to mimic the real-world feasibility of the models created, ensuring no overlap between the evaluation set and the training or validation dataset.
 
 ANN and CNN architectures were chosen for model development, with further optimization conducted such as hyperparameter tuning, data augmentation, edge detection filtering, early stopping, and other regularization techniques to reduce overfitting and improve model performance. After analyzing the result of each model variation, the final model chosen for sign shape prediction was ‘shape_cnn_opt’ trained with data augmentation, achieving an accuracy and weighted F1-score of 0.98. The chosen model for sign type was ‘type_cnn_1’ trained with data augmentation, achieving an accuracy and weighted F1-score of 0.90.
+</details>
 
-## References
+<details>
+<summary><h2>References</h2></summary>
 1. Ahmad, I. (2024). ‘Sigmoid vs ReLU’, Educative. Retrieved May 5, 2024, from https://www.educative.io/answers/sigmoid-vs-relu.
 2. Vishwakarma, N. (2023). ‘What is Adam Optimizer?’, Analytics Vidhya. Retrieved May 5, 2024, from https://www.analyticsvidhya.com/blog/2023/09/what-is-adam-optimizer/.
 3. Sharma, N., et al. (2018). “An Analysis Of Convolutional Neural Networks For Image Classification.” Procedia Computer Science, vol. 132, pp. 377–84, https://doi.org/10.1016/j.procs.2018.05.198.
 4. Yamashita, R., Nishio, M., Do, R.K., & Togashi, K. (2018). ‘Convolutional neural networks: an overview and application in radiology’, Insights into Imaging, vol. 9, no. 4, pp. 611-629. Retrieved May 18, 2024, from https://doi.org/10.1007/s13244-018-0639-9.
-5. Heaton, J. (2018). “Ian Goodfellow, Yoshua Bengio, and Aaron Courville: Deep Learning: The MIT Press, 2016, 800 Pp, ISBN: 0262035618.” Genetic Programming and Evolvable Machines, vol. 19, no. 1–2, Springer US, pp. 305–07, https://doi.org/10.1007/s10710-017-9314-z.
+5. Heaton, J. (2018). “Ian Goodfellow, Yoshua Bengio, and Aaron Courville: Deep Learning: The MIT Press, 2016, 800 Pp, ISBN: 0262035618.” Genetic Programming and
