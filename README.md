@@ -166,7 +166,11 @@ ANN and CNN architectures were chosen for model development, with further optimi
 <details>
 <summary><h2>References</h2></summary>
 1. Ahmad, I. (2024). ‘Sigmoid vs ReLU’, Educative. Retrieved May 5, 2024, from https://www.educative.io/answers/sigmoid-vs-relu.
+  
 2. Vishwakarma, N. (2023). ‘What is Adam Optimizer?’, Analytics Vidhya. Retrieved May 5, 2024, from https://www.analyticsvidhya.com/blog/2023/09/what-is-adam-optimizer/.
+   
 3. Sharma, N., et al. (2018). “An Analysis Of Convolutional Neural Networks For Image Classification.” Procedia Computer Science, vol. 132, pp. 377–84, https://doi.org/10.1016/j.procs.2018.05.198.
+   
 4. Yamashita, R., Nishio, M., Do, R.K., & Togashi, K. (2018). ‘Convolutional neural networks: an overview and application in radiology’, Insights into Imaging, vol. 9, no. 4, pp. 611-629. Retrieved May 18, 2024, from https://doi.org/10.1007/s13244-018-0639-9.
+   
 5. Heaton, J. (2018). “Ian Goodfellow, Yoshua Bengio, and Aaron Courville: Deep Learning: The MIT Press, 2016, 800 Pp, ISBN: 0262035618.” Genetic Programming and
